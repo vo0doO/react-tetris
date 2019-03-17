@@ -39,19 +39,19 @@
       "fa": "امتیاز"
     },
     "highestScore": {
-      "ru": "Рекордное время",
+      "ru": "Реккорд",
       "en": "Max",
       "fr": "Max",
       "fa": "حداکثر"
     },
     "lastRound": {
-      "ru": "Рекордный раунд",
+      "ru": "Тот раунд",
       "en": "Last Round",
       "fr": "Dernier Tour",
       "fa": "آخرین دور"
     },
     "cleans": {
-      "ru": "Взорвано ребер",
+      "ru": "Этажей++",
       "en": "Cleans",
       "fr": "Lignes",
       "fa": "پاک کرد"
@@ -63,7 +63,7 @@
       "fa": "سطح"
     },
     "startLine": {
-      "ru": "Стартовая линия",
+      "ru": "Сложность",
       "en": "Start Line",
       "fr": "Ligne Départ",
       "fa": "خط شروع"

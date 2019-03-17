@@ -41,7 +41,7 @@ const states = {
   // 自动下落setTimeout变量
   fallInterval: null,
 
-  // 游戏开始
+  // Начало игры
   start: () => {
     if (music.start) {
       music.start();
@@ -57,7 +57,7 @@ const states = {
     states.auto();
   },
 
-  // 自动下落
+  // Автоматическое падение
   auto: (timeout) => {
     const out = (timeout < 0 ? 0 : timeout);
     let state = store.getState();
@@ -75,7 +75,7 @@ const states = {
         const xy = cur && cur.xy;
         shape.forEach((m, k1) => (
           m.forEach((n, k2) => {
-            if (n && xy.get(0) + k1 >= 0) { // 竖坐标可以为负
+            if (n && xy.get(0) + k1 >= 0) { // Вертикальные координаты могут быть отрицательными
               let line = matrix.get(xy.get(0) + k1);
               line = line.set(xy.get(1) + k2, 1);
               matrix = matrix.set(xy.get(0) + k1, line);
@@ -90,7 +90,7 @@ const states = {
       out === undefined ? speeds[state.get('speedRun') - 1] : out);
   },
 
-  // 一个方块结束, 触发下一个
+  // Конец квадрата, вызвать следующий
   nextAround: (matrix, stopDownTrigger) => {
     clearTimeout(states.fallInterval);
     store.dispatch(actions.lock(true));
@@ -100,7 +100,7 @@ const states = {
     }
 
     const addPoints = (store.getState().get('points') + 10) +
-      ((store.getState().get('speedRun') - 1) * 2); // 速度越快, 得分越高
+      ((store.getState().get('speedRun') - 1) * 2); // быстрее, Более высокий балл
 
     states.dispatchPoints(addPoints);
 
@@ -125,7 +125,7 @@ const states = {
     }, 100);
   },
 
-  // 页面焦点变换
+  // Преобразование фокуса страницы
   focus: (isFocus) => {
     store.dispatch(actions.focus(isFocus));
     if (!isFocus) {
@@ -138,7 +138,7 @@ const states = {
     }
   },
 
-  // 暂停
+  // пауза
   pause: (isPause) => {
     store.dispatch(actions.pause(isPause));
     if (isPause) {
@@ -148,7 +148,7 @@ const states = {
     states.auto();
   },
 
-  // 消除行
+  // Устранить линии
   clearLines: (matrix, lines) => {
     const state = store.getState();
     let newMatrix = matrix;
@@ -162,19 +162,19 @@ const states = {
     states.auto();
     store.dispatch(actions.lock(false));
     const clearLines = state.get('clearLines') + lines.length;
-    store.dispatch(actions.clearLines(clearLines)); // 更新消除行
+    store.dispatch(actions.clearLines(clearLines)); // Обновить строку исключения
 
     const addPoints = store.getState().get('points') +
-      clearPoints[lines.length - 1]; // 一次消除的行越多, 加分越多
-    states.dispatchPoints(addPoints);
+      clearPoints[lines.length - 1]; // Больше строк, которые удаляются за один раз,
+    states.dispatchPoints(addPoints); // Чем больше очков вы добавляете
 
-    const speedAdd = Math.floor(clearLines / eachLines); // 消除行数, 增加对应速度
-    let speedNow = state.get('speedStart') + speedAdd;
+    const speedAdd = Math.floor(clearLines / eachLines); // Исключить количество рядов,
+    let speedNow = state.get('speedStart') + speedAdd;  // Увеличьте соответствующую скорость
     speedNow = speedNow > 6 ? 6 : speedNow;
     store.dispatch(actions.speedRun(speedNow));
   },
 
-  // 游戏结束, 触发动画
+  // Конец игры, Триггерная анимация
   overStart: () => {
     clearTimeout(states.fallInterval);
     store.dispatch(actions.lock(true));
@@ -182,7 +182,7 @@ const states = {
     store.dispatch(actions.pause(false));
   },
 
-  // 游戏结束动画完成
+  // Анимация окончания игры завершена
   overEnd: () => {
     store.dispatch(actions.matrix(blankMatrix));
     store.dispatch(actions.moveBlock({ reset: true }));
@@ -191,8 +191,8 @@ const states = {
     store.dispatch(actions.clearLines(0));
   },
 
-  // 写入分数
-  dispatchPoints: (point) => { // 写入分数, 同时判断是否创造最高分
+  // Написать счет
+  dispatchPoints: (point) => { // Написать счет, Также судите, стоит ли создавать самый высокий балл
     store.dispatch(actions.points(point));
     if (point > 0 && point > store.getState().get('max')) {
       store.dispatch(actions.max(point));
