@@ -1,6 +1,6 @@
 import { blockType, StorageKey } from './const';
 
-const hiddenProperty = (() => { // document[hiddenProperty] 可以判断页面是否失焦
+const hiddenProperty = (() => { // document[hiddenProperty] canJudgeWhetherThePageIsOutOfFocus
   let names = [
     'hidden',
     'webkitHidden',
@@ -15,22 +15,22 @@ const visibilityChangeEvent = (() => {
   if (!hiddenProperty) {
     return false;
   }
-  return hiddenProperty.replace(/hidden/i, 'visibilitychange'); // 如果属性有前缀, 相应的事件也有前缀
+  return hiddenProperty.replace(/hidden/i, 'visibilitychange'); // if_the_attribute_has_a_prefix, the_corresponding_event_also_has_a_prefix
 })();
 
 const isFocus = () => {
-  if (!hiddenProperty) { // 如果不存在该特性, 认为一直聚焦
+  if (!hiddenProperty) { // if_this_feature_does_not_exist, think_always_focused
     return true;
   }
   return !document[hiddenProperty];
 };
 
 const unit = {
-  getNextType() { // 随机获取下一个方块类型
+  getNextType() { // Randomly get the next block type
     const len = blockType.length;
     return blockType[Math.floor(Math.random() * len)];
   },
-  want(next, matrix) { // 方块是否能移到到指定位置
+  want(next, matrix) { // Can the square move to the specified position?
     const xy = next.xy;
     const shape = next.shape;
     const horizontal = shape.get(0).size;
@@ -58,7 +58,7 @@ const unit = {
       })
     ));
   },
-  isClear(matrix) { // 是否达到消除状态
+  isClear(matrix) { // Whether the elimination state is reached
     const clearLines = [];
     matrix.forEach((m, k) => {
       if (m.every(n => !!n)) {
@@ -70,13 +70,13 @@ const unit = {
     }
     return clearLines;
   },
-  isOver(matrix) { // 游戏是否结束, 第一行落下方块为依据
+  isOver(matrix) { // Whether the game is over, The first line drops the square as the basis
     return matrix.get(0).some(n => !!n);
   },
-  subscribeRecord(store) { // 将状态记录到 localStorage
+  subscribeRecord(store) { // Record status to localStorage
     store.subscribe(() => {
       let data = store.getState().toJS();
-      if (data.lock) { // 当状态为锁定, 不记录
+      if (data.lock) { // When the status is locked, Not recorded
         return;
       }
       data = JSON.stringify(data);
@@ -87,7 +87,7 @@ const unit = {
       localStorage.setItem(StorageKey, data);
     });
   },
-  isMobile() { // 判断是否为移动端
+  isMobile() { // Determine whether it is a mobile terminal
     const ua = navigator.userAgent;
     const android = /Android (\d+\.\d+)/.test(ua);
     const iphone = ua.indexOf('iPhone') > -1;
