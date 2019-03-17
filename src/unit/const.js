@@ -63,7 +63,7 @@ const clearPoints = [100, 300, 700, 1500];
 
 const StorageKey = 'REACT_TETRIS';
 
-const lastRecord = (() => { // 上一把的状态
+const lastRecord = (() => { // The state of the previous one
   let data = localStorage.getItem(StorageKey);
   if (!data) {
     return false;
@@ -76,7 +76,7 @@ const lastRecord = (() => { // 上一把的状态
     data = JSON.parse(data);
   } catch (e) {
     if (window.console || window.console.error) {
-      window.console.error('读取记录错误:', e);
+      window.console.error('Read record error:', e);
     }
     return false;
   }
@@ -93,7 +93,7 @@ const transform = (function () {
 
 const eachLines = 20; // 每消除eachLines行, 增加速度
 
-const getParam = (param) => { // 获取浏览器参数
+const getParam = (param) => { // Get browser parameters
   const r = new RegExp(`\\?(?:.+&)?${param}=(.*?)(?:&.*)?$`);
   const m = window.location.toString().match(r);
   return m ? decodeURI(m[1]) : '';
