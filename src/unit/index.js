@@ -15,8 +15,8 @@ const visibilityChangeEvent = (() => {
   if (!hiddenProperty) {
     return false;
   }
-  return hiddenProperty.replace(/hidden/i, 'visibilitychange'); // if_the_attribute_has_a_prefix, the_corresponding_event_also_has_a_prefix
-})();
+  return hiddenProperty.replace(/hidden/i, 'visibilitychange'); // "if_the_attribute_has_a_prefix"
+})(); // the_corresponding_event_also_has_a_prefix
 
 const isFocus = () => {
   if (!hiddenProperty) { // if_this_feature_does_not_exist, think_always_focused
